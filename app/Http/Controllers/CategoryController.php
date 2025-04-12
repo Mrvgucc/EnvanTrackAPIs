@@ -24,23 +24,6 @@ class CategoryController extends Controller
 
     }
 
-    public function categoryDelete($id)
-    {
-        $category = Category::find($id);
-
-        if (!$category) {
-            return response()->json([
-                'message' => 'Category not found.',
-            ]);
-        }
-
-        $category->delete();
-
-        return response()->json([
-            'message' => 'Category deleted successfully.',
-        ]);
-    }
-
     public function categoryUpdate(Request $request, $id)
     {
         $validated = $request->validate(["name" => "required"]);
@@ -57,7 +40,24 @@ class CategoryController extends Controller
         $category->save();
 
         return response()->json([
-           'message' => 'Category updated successfully.',
+            'message' => 'Category updated successfully.',
+        ]);
+    }
+
+    public function categoryDelete($id)
+    {
+        $category = Category::find($id);
+
+        if (!$category) {
+            return response()->json([
+                'message' => 'Category not found.',
+            ]);
+        }
+
+        $category->delete();
+
+        return response()->json([
+            'message' => 'Category deleted successfully.',
         ]);
     }
 
