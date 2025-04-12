@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AseetController;
+use App\Http\Controllers\EmployeeController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -29,3 +30,12 @@ Route::put('/assetUpdate/{id}', [AseetController::class, 'assetUpdate']);
 Route::delete('/assetDelete/{id}', [AseetController::class, 'assetDelete']);
 
 Route::get('/assetList', [AseetController::class, 'assetList']);
+
+
+Route::post('/employeeInsert', [EmployeeController::class, 'employeeInsert']);
+
+Route::put('/employeeUpdate/{id}', [EmployeeController::class, 'employeeUpdate']);
+
+Route::delete('/employeeDelete/{id}', [EmployeeController::class, 'employeeDelete']);
+
+Route::get('/employeeList', [EmployeeController::class, 'employeeList']);
