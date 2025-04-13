@@ -96,4 +96,33 @@ class EmployeeController extends Controller
             'employees' => $employees,
         ]);
     }
+
+    public function employeeInfo(){
+        $employeeId =auth()->id();
+
+        if (!$employeeId){
+            return response()->json([
+                'message' => 'User not authenticated'
+            ],401);
+        }
+
+        $employee = Employee::find($employeeId);
+
+        if (!$employee) {
+            return response()->json([
+                'message' => 'Employee not found',
+            ], 404);
+        }
+
+        return response()->json([
+            'name' => $employee->name,
+            'surname' => $employee->surname,
+            'email' => $employee->email,
+            'phone' => $employee->phone,
+            'status' => $employee->status,
+
+        ]);
+
+
+    }
 }
