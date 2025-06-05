@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Asset;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
 class AseetController extends Controller
@@ -13,6 +14,16 @@ class AseetController extends Controller
             'category_id' => 'required',
             'registered_personal' => 'nullable',
         ]);
+
+        if(isset($validated['registered_personal'])){
+            $employee = Employee::find($validated['registered_personal']); // id’ye göre arıyorsan
+            if (!$employee) {
+                return response()->json([
+                    'message' => 'Belirtilen personel bulunamadı.',
+                ], 404);
+            }
+
+        }
 
         $asset = Asset::create([
             'name' => $validated['name'],
@@ -88,7 +99,7 @@ class AseetController extends Controller
     }
 
     public function assetList(){
-        $assets = Asset::all();
+        $assets = Asset::with('registered_personal','category_id')->get();
         return response()->json([
             'assets' => $assets,
         ]);
