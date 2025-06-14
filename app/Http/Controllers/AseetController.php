@@ -101,10 +101,36 @@ class AseetController extends Controller
     public function assetList(){
         $assets = Asset::with('registered_personal','category_id')->get();
         return response()->json([
+            'count' => count($assets),
             'assets' => $assets,
         ]);
     }
 
+    public function assetListWithId($id){
+        $user = auth()->user();
+
+        if ($user->id != $id) {
+            return response()->json([
+                'message' => 'Yetkisiz erişim.'
+            ], 403);
+        }
+
+        $assets = Asset::with('registered_personal', 'category_id')
+            ->where('registered_personal', $id)
+            ->get();
+
+        if ($assets->isEmpty()) {
+            return response()->json([
+                'message' => 'Asset not found.',
+            ]);
+        }
+
+        return response()->json([
+            'count' => $assets->count(),
+            'employee_id' => $id,
+            'assets' => $assets,
+        ]);
+    }
 
 
 }

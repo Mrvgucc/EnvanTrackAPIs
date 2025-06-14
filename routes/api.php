@@ -36,6 +36,8 @@ Route::delete('/assetDelete/{id}', [AseetController::class, 'assetDelete']);
 
 Route::get('/assetList', [AseetController::class, 'assetList']);
 
+Route::middleware("auth:sanctum")->get("assetListWithId/{id}", [AseetController::class ,"assetListWithId"]);
+
 
 
 Route::post('/employeeInsert', [EmployeeController::class, 'employeeInsert']);
